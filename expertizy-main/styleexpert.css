@@ -1,0 +1,156 @@
+/* expert4.css - Style pour la page profil expert */
+
+:root {
+    --color-primary: #29d9d5;
+    --color-dark: #222;
+    --color-light: #fff;
+    --color-grey: #777;
+    --color-light-grey: #f5f5f5;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding-top: 70px; /* Pour compenser le header fixe */
+}
+
+
+
+.main-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+.content-left {
+    flex: 2;
+}
+
+.content-right {
+    flex: 1;
+}
+
+/* Cartes */
+.card {
+    background-color: var(--color-light);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card-title {
+    color: var(--color-primary);
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* Header expert */
+.expert-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.expert-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary);
+}
+
+.expert-name {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--color-dark);
+}
+
+.expert-title {
+    color: var(--color-grey);
+    font-size: 16px;
+}
+
+/* Boutons */
+.btn {
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+.btn-primary:hover {
+    background-color: #1fb8b4;
+}
+
+.btn-rounded {
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    background-color: #e6f9f9;
+    color: var(--color-primary);
+}
+
+/* Liste */
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .content-right {
+        order: -1;
+        margin-bottom: 30px;
+    }
+    
+    header {
+        padding: 0 15px;
+    }
+    
+    .expert-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .expert-avatar {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-buttons {
+        display: none;
+    }
+    
+    .logo a {
+        font-size: 22px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+}

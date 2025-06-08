@@ -1,0 +1,233 @@
+/* Styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    background-color: #111;
+    color: #fff;
+    /* New background properties */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                      url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+header {
+    background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 5%;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(41, 217, 213, 0.2);
+}
+
+header .logo a {
+    font-size: 25px;
+    color: #29d9d5;
+    text-decoration: none;
+}
+
+header .logo a span {
+    color: #fff;
+}
+
+header .menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu li {
+    margin: 0 15px;
+    list-style-type: none;
+}
+
+.menu li a {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu li a:hover {
+    color: #29d9d5;
+}
+
+/* Container Signup */
+.signup-container {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: rgba(34, 34, 34, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(41, 217, 213, 0.2);
+}
+
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #29d9d5;
+    font-size: 28px;
+}
+
+/* Formulaires */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.form-group label.required::after {
+    content: " *";
+    color: #29d9d5;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(41, 217, 213, 0.3);
+    border-radius: 5px;
+    background-color: rgba(51, 51, 51, 0.7);
+    color: #fff;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #29d9d5;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(41, 217, 213, 0.3);
+    background-color: rgba(51, 51, 51, 0.9);
+}
+
+/* Custom select arrow */
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2329d9d5' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+}
+
+/* Section Experts */
+#expert-fields {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(41, 217, 213, 0.3);
+    display: none; /* Masqué par défaut */
+    background-color: rgba(41, 217, 213, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+#expert-fields h3 {
+    color: #29d9d5;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* Boutons */
+.btn-signup {
+    width: 100%;
+    padding: 14px;
+    background-color: #29d9d5;
+    border: none;
+    border-radius: 5px;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-signup:hover {
+    background-color: #1fc7c3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 217, 213, 0.4);
+}
+
+.btn-signup:active {
+    transform: translateY(0);
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    background-color: rgba(34, 34, 34, 0.9);
+    padding: 15px 0;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(41, 217, 213, 0.2);
+}
+
+footer p {
+    color: #fff;
+}
+
+footer p span {
+    color: #29d9d5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .signup-container {
+        margin: 80px 20px;
+        padding: 25px;
+    }
+    
+    header {
+        padding: 0 3%;
+    }
+    
+    .menu li {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), 
+                          url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+    }
+    
+    .signup-container {
+        margin: 70px 15px;
+        padding: 20px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+    }
+}

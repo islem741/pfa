@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="stylessignup.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400;500&display=swap">
+    <style>
+        .hidden { display: none; }
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function toggleExpertFields() {
+            const accountType = document.getElementById('account-type').value;
+            const expertFields = document.getElementById('expert-fields');
+            
+            if (accountType === 'expert') {
+                expertFields.classList.remove('hidden');
+            } else {
+                expertFields.classList.add('hidden');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('account-type').addEventListener('change', toggleExpertFields);
+        });
+    </script>
+    
+    <header>
+        <div class="logo">
+            <a href="index.html"> <span>expert</span>IZY</a>
+        </div>
+        <ul class="menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#">À Propos</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <section>
+        <div class="signup-container">
+            <h2>Créer un compte</h2>
+            
+            <form id="signup-form" method="POST" action="signup.php">
+                <!-- Common fields -->
+                <div class="form-group">
+                    <label for="nom">Nom*</label>
+                    <input type="text" name="nom" id="nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="prenom">Prénom*</label>
+                    <input type="text" name="prenom" id="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe*</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirmez le mot de passe*</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required>
+                </div>
+                
+                <!-- Account type selector -->
+                <div class="form-group">
+                    <label for="account-type">Je suis*</label>
+                    <select id="account-type" name="account_type" required>
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="user">Utilisateur</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                
+                <!-- Expert-specific fields -->
+                <div id="expert-fields" class="hidden">
+                    <h3>Informations professionnelles</h3>
+                    
+                    <div class="form-group">
+                        <label for="specialite">Spécialité*</label>
+                        <select name="specialite" id="specialite">
+                            <option value="">-- Sélectionnez votre spécialité --</option>
+                            <option value="sante">Santé</option>
+                            <option value="commerce">Commerce</option>
+                            <option value="rh">Ressources Humaines</option>
+                            <option value="marketing">Marketing Digital</option>
+                            <option value="formation">Formation Professionnelle</option>
+                            <option value="juridique">Consultation Juridique</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Années d'expérience*</label>
+                        <input type="number" name="experience" id="experience" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="diplomes">Diplômes/Certifications*</label>
+                        <textarea name="diplomes" id="diplomes" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tarif">Tarif horaire (DT)*</label>
+                        <input type="number" name="tarif" id="tarif" min="0" step="0.01">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-signup">S'inscrire</button>
+            </form>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

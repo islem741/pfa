@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Expertizy</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Menu latéral -->
+        <aside class="sidebar">
+            <div class="profile-summary">
+                <img src="images/profile.jpg" alt="Photo profil" class="avatar">
+                <h3>Ali Youssef</h3>
+                <p>Membre depuis 2023</p>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="mes-rdv.html"><i class="fas fa-calendar-alt"></i> Mes RDV</a></li>
+                    <li><a href="#"><i class="fas fa-search"></i> Trouver un expert</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Messagerie <span class="notification-badge">3</span></a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="main-content">
+            <header class="content-header">
+                <h2>Tableau de Bord</h2>
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+            </header>
+            
+            <!-- Section Prochain RDV -->
+            <section class="next-appointment">
+                <h3><i class="fas fa-clock"></i> Votre prochain rendez-vous</h3>
+                <div class="appointment-card">
+                    <div class="expert-info">
+                        <img src="images/exp1.png" alt="Expert">
+                        <div>
+                            <h4>Dr. Samia Dhaouedi </h4>
+                            <p>spécialiste de la santé mentale</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(12 avis)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="appointment-details">
+                        <p><strong>Date :</strong> 15 Nov. 2023</p>
+                        <p><strong>Heure :</strong> 14h30 - 15h15</p>
+                        <p><strong>Type :</strong> Consultation vidéo</p>
+                        <div class="action-buttons">
+                            <button class="btn btn-cancel">Annuler</button>
+                            <button class="btn btn-primary">Détails</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Actions Rapides -->
+            <section class="quick-actions">
+                <h3><i class="fas fa-bolt"></i> Actions rapides</h3>
+                <div class="action-grid">
+                    <a href="#" class="action-card">
+                        <i class="fas fa-search"></i>
+                        <span>Trouver un expert</span>
+                    </a>
+                    <a href="mes-rdv.html" class="action-card">
+                        <i class="fas fa-video"></i>
+                        <span>Nouvelle consultation</span>
+                    </a>
+                    <a href="#" class="action-card">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Mes documents</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Section Historique -->
+            <section class="history">
+                <h3><i class="fas fa-history"></i> Historique des consultations</h3>
+                <div class="history-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Expert</th>
+                                <th>Spécialité</th>
+                                <th>Durée</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>15 Mar. 2025</td>
+                                <td>Mr. Youssef mouihbi</td>
+                                <td>Digital Marketing</td>
+                                <td>45 min</td>
+                                <td>
+                                    <button class="btn btn-small"><i class="fas fa-star"></i> Noter</button>
+                                    <button class="btn btn-small"><i class="fas fa-redo"></i> Revoir</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2 Avr. 2025</td>
+                                <td>Dr. Samia Dhaouedi</td>
+                                <td>Santé mentale</td>
+                                <td>60 min</td>
+                                <td>
+                                    <button class="btn btn-small"><i class="fas fa-star"></i> Noter</button>
+                                    <button class="btn btn-small"><i class="fas fa-redo"></i> Revoir</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

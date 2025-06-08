@@ -1,0 +1,263 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+header {
+    background-color: #222;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    padding: 0 5%;
+}
+
+.logo a {
+    font-size: 25px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo a span {
+    color: #29d9d5;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu li {
+    margin: 0 15px;
+    list-style-type: none;
+}
+
+.menu li a {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+}
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-login:hover {
+    background-color: #29d9d5;
+    color: #fff;
+}
+
+.btn-login {
+    color: #29d9d5;
+    font-size: 14px;
+    border: 2px solid #29d9d5;
+    padding: 5px 20px;
+    transition: 0.5s;
+    font-weight: bolder;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.btn-signup {
+    color: #fff;
+    font-size: 14px;
+    border: 2px solid #29d9d5;
+    padding: 5px 20px;
+    transition: 0.5s;
+    font-weight: bolder;
+    background-color: #29d9d5;
+}
+
+.btn-signup:hover {
+    background-color: transparent;
+    color: #29d9d5;
+}
+
+.btn-signup {
+    background-color: #29d9d5;
+    color: #111;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn-signup:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-login:hover {
+    background-color: #29d9d5;
+    color: #fff;
+}
+
+#home {
+    background: linear-gradient(rgba(0, 0, 0, 0.1), #333), url("https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+    padding: 0 20px;
+}
+
+#home h2 {
+    font-size: 45px;
+    margin-bottom: 10px;
+    color: transparent;
+    text-transform: lowercase;
+    -webkit-text-stroke: #fff 0.02px;
+}
+
+#home h4 {
+    font-size: 50px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+#home p {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 12px;
+    max-width: 600px;
+}
+
+.home-btn {
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #29d9d5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background-color: #1fb8b4;
+}
+
+/* Services Section */
+#services {
+    padding: 100px 5%;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.section-title p {
+    color: #777;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.service-box {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+}
+
+.service-box i {
+    font-size: 40px;
+    color: #29d9d5;
+    margin-bottom: 20px;
+}
+
+.service-box h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.service-box p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+footer {
+    width: 100%;
+    background-color: #222;
+    padding: 20px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+footer p {
+    color: #fff;
+}
+
+footer p span {
+    color: #29d9d5;
+}
+
+/* Responsive Styles */
+@media (max-width: 750px) {
+    header .menu {
+        display: none;
+    }
+    
+    #home h2 {
+        font-size: 18px;
+        color: #fff;
+    }
+    
+    #home h4 {
+        font-size: 28px;
+    }
+
+    #home p {
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .services-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

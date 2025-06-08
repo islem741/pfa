@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Rendez-vous - Expertizy</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Menu latéral -->
+        <aside class="sidebar">
+            <div class="profile-summary">
+                <img src="images/profile.jpg" alt="Photo profil" class="avatar">
+                <h3>Ali Youssef</h3>
+                <p>Membre depuis 2023</p>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li class="active"><a href="mes-rdv.html"><i class="fas fa-calendar-alt"></i> Mes RDV</a></li>
+                    <li><a href="trouver-expert.html"><i class="fas fa-search"></i> Trouver un expert</a></li>
+                    <li><a href="messagerie.html"><i class="fas fa-envelope"></i> Messagerie <span class="notification-badge">3</span></a></li>
+                    <li><a href="parametres.html"><i class="fas fa-cog"></i> Paramètres</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="main-content">
+            <header class="content-header">
+                <h2><i class="fas fa-calendar-alt"></i> Mes Rendez-vous</h2>
+                <div class="header-actions">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <button id="new-appointment-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nouveau RDV
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filtres -->
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label for="status-filter">Statut :</label>
+                    <select id="status-filter" class="filter-select">
+                        <option value="all">Tous</option>
+                        <option value="upcoming">À venir</option>
+                        <option value="completed">Passés</option>
+                        <option value="canceled">Annulés</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="expert-filter">Expert :</label>
+                    <select id="expert-filter" class="filter-select">
+                        <option value="all">Tous les experts</option>
+                        <option value="nutrition">Nutritionnistes</option>
+                        <option value="juriste">Juristes</option>
+                        <option value="sante">Santé mentale</option>
+                        <option value="marketing">Marketing digital</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="type-filter">Type :</label>
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">Tous types</option>
+                        <option value="video">Visioconférence</option>
+                        <option value="phone">Téléphonique</option>
+                        <option value="face-to-face">En personne</option>
+                    </select>
+                </div>
+                <button id="reset-filters" class="btn btn-outline">
+                    <i class="fas fa-undo"></i> Réinitialiser
+                </button>
+            </section>
+
+            <!-- Vue Calendrier/Liste -->
+            <div class="view-toggle">
+                <button class="view-option active" data-view="calendar">
+                    <i class="fas fa-calendar"></i> Calendrier
+                </button>
+                <button class="view-option" data-view="list">
+                    <i class="fas fa-list"></i> Liste
+                </button>
+            </div>
+
+            <!-- Calendrier -->
+            <section id="calendar-view" class="appointment-view active-view">
+                <div id="calendar"></div>
+            </section>
+
+            <!-- Liste -->
+            <section id="list-view" class="appointment-view">
+                <div class="appointment-list">
+                    <!-- RDV 1 - À venir -->
+                    <div class="appointment-item upcoming">
+                        <div class="appointment-header">
+                            <span class="status-badge upcoming">À venir</span>
+                            <span class="date">15 Nov. 2023 - 14h30</span>
+                        </div>
+                        <div class="appointment-body">
+                            <img src="assets/expert1.jpg" alt="Expert" class="expert-avatar">
+                            <div class="expert-info">
+                                <h4>Dr. Samia Dhaouedi</h4>
+                                <p class="specialty">Spécialiste de la santé mentale</p>
+                                <p class="appointment-type">
+                                    <i class="fas fa-video"></i> Consultation vidéo
+                                </p>
+                                <p class="appointment-subject">
+                                    <i class="fas fa-comment"></i> Sujet : Gestion du stress
+                                </p>
+                            </div>
+                            <div class="appointment-actions">
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                                <button class="btn btn-cancel btn-sm">
+                                    <i class="fas fa-times"></i> Annuler
+                                </button>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-info-circle"></i> Détails
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RDV 2 - Terminé -->
+                    <div class="appointment-item completed">
+                        <div class="appointment-header">
+                            <span class="status-badge completed">Terminé</span>
+                            <span class="date">10 Nov. 2023 - 10h00</span>
+                        </div>
+                        <div class="appointment-body">
+                            <img src="assets/expert2.jpg" alt="Expert" class="expert-avatar">
+                            <div class="expert-info">
+                                <h4>Mr. Youssef Mouihbi</h4>
+                                <p class="specialty">Expert en Digital Marketing</p>
+                                <p class="appointment-type">
+                                    <i class="fas fa-phone"></i> Appel téléphonique
+                                </p>
+                                <p class="appointment-subject">
+                                    <i class="fas fa-comment"></i> Sujet : Stratégie de contenu
+                                </p>
+                            </div>
+                            <div class="appointment-actions">
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-star"></i> Noter
+                                </button>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-file-alt"></i> Compte-rendu
+                                </button>
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-redo"></i> Reprogrammer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RDV 3 - Annulé -->
+                    <div class="appointment-item canceled">
+                        <div class="appointment-header">
+                            <span class="status-badge canceled">Annulé</span>
+                            <span class="date">5 Nov. 2023 - 16h30</span>
+                        </div>
+                        <div class="appointment-body">
+                            <img src="assets/expert3.jpg" alt="Expert" class="expert-avatar">
+                            <div class="expert-info">
+                                <h4>Dr. Leila Ben Ammar</h4>
+                                <p class="specialty">Nutritionniste</p>
+                                <p class="appointment-type">
+                                    <i class="fas fa-video"></i> Consultation vidéo
+                                </p>
+                                <p class="appointment-subject">
+                                    <i class="fas fa-comment"></i> Sujet : Régime alimentaire
+                                </p>
+                                <p class="cancel-reason">
+                                    <i class="fas fa-info-circle"></i> Annulé par l'expert
+                                </p>
+                            </div>
+                            <div class="appointment-actions">
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-redo"></i> Reprogrammer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-outline" disabled>
+                        <i class="fas fa-chevron-left"></i> Précédent
+                    </button>
+                    <span>Page 1 sur 2</span>
+                    <button class="btn btn-outline">
+                        Suivant <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Nouveau RDV -->
+    <div id="appointment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fas fa-plus-circle"></i> Prendre un nouveau rendez-vous</h3>
+            
+            <form id="new-appointment-form">
+                <div class="form-group">
+                    <label for="expert-select">Choisir un expert :</label>
+                    <select id="expert-select" class="form-control" required>
+                        <option value="">-- Sélectionnez --</option>
+                        <option value="1">Dr. Samia Dhaouedi (Santé mentale)</option>
+                        <option value="2">Mr. Youssef Mouihbi (Marketing digital)</option>
+                        <option value="3">Dr. Leila Ben Ammar (Nutritionniste)</option>
+                        <option value="4">Me. Karim Ben Salah (Avocat)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-type">Type de consultation :</label>
+                    <select id="appointment-type" class="form-control" required>
+                        <option value="video">Visioconférence</option>
+                        <option value="phone">Téléphonique</option>
+                        <option value="face-to-face">En personne</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-date">Date :</label>
+                    <input type="date" id="appointment-date" class="form-control" required min="2023-11-01">
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-time">Heure :</label>
+                    <input type="time" id="appointment-time" class="form-control" required min="09:00" max="18:00">
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-duration">Durée :</label>
+                    <select id="appointment-duration" class="form-control" required>
+                        <option value="30">30 minutes</option>
+                        <option value="45" selected>45 minutes</option>
+                        <option value="60">1 heure</option>
+                        <option value="90">1 heure 30</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-subject">Sujet :</label>
+                    <input type="text" id="appointment-subject" class="form-control" placeholder="Objet de la consultation" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment-notes">Notes (optionnel) :</label>
+                    <textarea id="appointment-notes" class="form-control" rows="3" placeholder="Décrivez brièvement votre demande..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline close-modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Confirmer le RDV</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Détails RDV -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fas fa-calendar-check"></i> Détails du rendez-vous</h3>
+            
+            <div class="appointment-details">
+                <div class="detail-row">
+                    <span class="detail-label">Expert :</span>
+                    <span class="detail-value">Dr. Samia Dhaouedi</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Spécialité :</span>
+                    <span class="detail-value">Santé mentale</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date :</span>
+                    <span class="detail-value">15 Novembre 2023 - 14h30 à 15h15</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Type :</span>
+                    <span class="detail-value"><i class="fas fa-video"></i> Consultation vidéo</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Sujet :</span>
+                    <span class="detail-value">Gestion du stress</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Statut :</span>
+                    <span class="detail-value"><span class="status-badge upcoming">À venir</span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Lien :</span>
+                    <span class="detail-value"><a href="#">https://expertizy.com/rdv/abc123</a></span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-calendar-alt"></i> Ajouter à mon calendrier
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-video"></i> Rejoindre la consultation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales/fr.min.js"></script>
+    <script src="mes-rdv.js"></script>
+</body>
+</html>
