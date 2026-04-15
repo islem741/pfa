@@ -70,3 +70,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Expertizy</title>
+    <link rel="stylesheet" href="styleslogin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400;500&display=swap">
+</head>
+<body>
+    <script src="script.js" defer></script>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"> <span>expert</span>IZY</a>
+        </div>
+        <ul class="menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#">À Propos</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <section class="login-section">
+        <div id="login-container">
+            <h2>Connexion</h2>
+            
+            <?php if (!empty($login_err)): ?>
+                <div style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 5px solid #c62828;">
+                    <?php echo htmlspecialchars($login_err); ?>
+                </div>
+            <?php endif; ?>
+            
+            <div class="account-type-selector">
+                <div class="selector-options">
+                    <input type="radio" id="user-type" name="account-type" value="user" checked hidden>
+                    <label for="user-type" class="option-card">
+                        <div class="option-icon">👤</div>
+                        <h3>Utilisateur</h3>
+                        <p>Je cherche des experts</p>
+                    </label>
+                    
+                    <input type="radio" id="expert-type" name="account-type" value="expert" hidden>
+                    <label for="expert-type" class="option-card">
+                        <div class="option-icon">⭐</div>
+                        <h3>Expert</h3>
+                        <p>Je propose mes services</p>
+                    </label>
+                </div>
+            </div>
+            
+            <form action="login.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(getCsrfToken()); ?>">
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="votre@email.com" value="<?php echo htmlspecialchars($email); ?>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Se Connecter</button>
+                
+                <div class="forgot-password">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+            </form>
+            
+            <div class="signup-link">
+                <p>Pas encore de compte ? <a href="signup.php" class="btn-signup">S'inscrire</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Expertizy. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
