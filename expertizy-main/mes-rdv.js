@@ -162,7 +162,7 @@ function setupModal() {
         modal.style.display = 'none';
         form.reset();
     });
-}c
+}
 
 function showAppointmentDetails(event) {
     const title = event.title;
