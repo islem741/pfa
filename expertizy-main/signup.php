@@ -1,105 +1,111 @@
 <?php
-// Configuration de la base de données
-$host = "localhost";
-$dbname = "pfa";
-$username = "root";
-$password = "";
+// Load shared configuration
+require_once __DIR__ . '/config.php';
 
-// Connexion à la base de données
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
-}
+// Initialize secure session
+initSecureSession();
 
-// Vérifier si le formulaire a été soumis
+// Process form submission
 if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['account_type'])) {
-    
-    // Récupérer les données du formulaire
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-    $account_type = $_POST['account_type'];
-    
-    // Variables pour les messages
+
+    // Variables for messages
     $message = "";
     $message_type = "";
-    
-    // Validation basique
-    if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($account_type)) {
-        $message = "Tous les champs obligatoires doivent être remplis.";
+
+    // Validate CSRF token
+    if (!validateCsrfToken($_POST['csrf_token'] ?? '')) {
+        $message = "Requête invalide. Veuillez réessayer.";
         $message_type = "error";
-    }
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message = "L'adresse email n'est pas valide.";
-        $message_type = "error";
-    }
-    elseif ($password !== $confirm_password) {
-        $message = "Les mots de passe ne correspondent pas.";
-        $message_type = "error";
-    }
-    else {
-        // Vérifier si l'email existe déjà
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        
-        if ($stmt->fetch()) {
-            $message = "Cet email est déjà utilisé.";
+    } else {
+        // Sanitize inputs
+        $nom = sanitizeInput($_POST['nom']);
+        $prenom = sanitizeInput($_POST['prenom']);
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
+        $account_type = sanitizeInput($_POST['account_type']);
+
+        // Basic validation
+        if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($account_type)) {
+            $message = "Tous les champs obligatoires doivent être remplis.";
             $message_type = "error";
-        }
-        else {
-            // Hacher le mot de passe
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            
-            try {
-                // Commencer une transaction
-                $pdo->beginTransaction();
-                
-                // Insérer l'utilisateur
-                $stmt = $pdo->prepare("INSERT INTO users (nom, prenom, email, password, account_type) VALUES (?, ?, ?, ?, ?)");
-                $stmt->execute([$nom, $prenom, $email, $hashed_password, $account_type]);
-                $user_id = $pdo->lastInsertId();
-                
-                // Si c'est un expert, traiter les données supplémentaires
-                if ($account_type === 'expert') {
-                    if (isset($_POST['specialite']) && isset($_POST['experience']) && isset($_POST['diplomes']) && isset($_POST['tarif'])) {
-                        $specialite = $_POST['specialite'];
-                        $experience = $_POST['experience'];
-                        $diplomes = $_POST['diplomes'];
-                        $tarif = $_POST['tarif'];
-                        
-                        // Validation des champs expert
-                        if (empty($specialite) || empty($diplomes) || $experience < 0 || $tarif < 0) {
-                            throw new Exception("Tous les champs experts doivent être remplis correctement.");
-                        }
-                        
-                        // Insérer dans la table experts
-                        $stmt = $pdo->prepare("INSERT INTO experts (user_id, specialite, experience, diplomes, tarif_horaire) VALUES (?, ?, ?, ?, ?)");
-                        $stmt->execute([$user_id, $specialite, $experience, $diplomes, $tarif]);
-                        
-                        $message = "Compte expert créé avec succès ! Vous pouvez maintenant vous connecter.";
-                        $message_type = "success";
-                    }
-                    else {
-                        throw new Exception("Les informations professionnelles sont requises pour un compte expert.");
-                    }
-                }
-                else {
-                    $message = "Compte utilisateur créé avec succès ! Vous pouvez maintenant vous connecter.";
-                    $message_type = "success";
-                }
-                
-                // Valider la transaction
-                $pdo->commit();
-                
-            } catch (Exception $e) {
-                // Annuler la transaction en cas d'erreur
-                $pdo->rollBack();
-                $message = "Erreur lors de la création du compte : " . $e->getMessage();
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = "L'adresse email n'est pas valide.";
+            $message_type = "error";
+        } elseif ($password !== $confirm_password) {
+            $message = "Les mots de passe ne correspondent pas.";
+            $message_type = "error";
+        } elseif (!in_array($account_type, ['user', 'expert'])) {
+            $message = "Type de compte invalide.";
+            $message_type = "error";
+        } else {
+            // Validate password strength
+            $passwordError = validatePassword($password);
+            if ($passwordError !== null) {
+                $message = $passwordError;
                 $message_type = "error";
+            } else {
+                try {
+                    $pdo = getDbConnection();
+
+                    // Check if email already exists
+                    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+                    $stmt->execute([$email]);
+
+                    if ($stmt->fetch()) {
+                        $message = "Cet email est déjà utilisé.";
+                        $message_type = "error";
+                    } else {
+                        // Hash the password
+                        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                        // Begin transaction
+                        $pdo->beginTransaction();
+
+                        // Insert user
+                        $stmt = $pdo->prepare("INSERT INTO users (nom, prenom, email, password, account_type) VALUES (?, ?, ?, ?, ?)");
+                        $stmt->execute([$nom, $prenom, $email, $hashed_password, $account_type]);
+                        $user_id = $pdo->lastInsertId();
+
+                        // Handle expert-specific data
+                        if ($account_type === 'expert') {
+                            if (isset($_POST['specialite']) && isset($_POST['experience']) && isset($_POST['diplomes']) && isset($_POST['tarif'])) {
+                                $specialite = sanitizeInput($_POST['specialite']);
+                                $experience = (int) $_POST['experience'];
+                                $diplomes = sanitizeInput($_POST['diplomes']);
+                                $tarif = (float) $_POST['tarif'];
+
+                                // Validate expert fields
+                                $valid_specialites = ['sante', 'commerce', 'rh', 'marketing', 'formation', 'juridique'];
+                                if (empty($specialite) || !in_array($specialite, $valid_specialites) || empty($diplomes) || $experience < 0 || $tarif < 0) {
+                                    throw new Exception("Tous les champs experts doivent être remplis correctement.");
+                                }
+
+                                // Insert into experts table
+                                $stmt = $pdo->prepare("INSERT INTO experts (user_id, specialite, experience, diplomes, tarif_horaire) VALUES (?, ?, ?, ?, ?)");
+                                $stmt->execute([$user_id, $specialite, $experience, $diplomes, $tarif]);
+
+                                $message = "Compte expert créé avec succès ! Vous pouvez maintenant vous connecter.";
+                                $message_type = "success";
+                            } else {
+                                throw new Exception("Les informations professionnelles sont requises pour un compte expert.");
+                            }
+                        } else {
+                            $message = "Compte utilisateur créé avec succès ! Vous pouvez maintenant vous connecter.";
+                            $message_type = "success";
+                        }
+
+                        // Commit transaction
+                        $pdo->commit();
+                    }
+                } catch (Exception $e) {
+                    if (isset($pdo) && $pdo->inTransaction()) {
+                        $pdo->rollBack();
+                    }
+                    error_log("Signup error: " . $e->getMessage());
+                    $message = "Erreur lors de la création du compte. Veuillez réessayer.";
+                    $message_type = "error";
+                }
             }
         }
     }
@@ -178,6 +184,8 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) &&
             <?php endif; ?>
             
             <form id="signup-form" method="POST" action="signup.php">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(getCsrfToken()); ?>">
+                
                 <!-- Common fields -->
                 <div class="form-group">
                     <label for="nom">Nom*</label>
@@ -196,7 +204,8 @@ if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) &&
                 
                 <div class="form-group">
                     <label for="password">Mot de passe*</label>
-                    <input type="password" name="password" id="password" required>
+                    <input type="password" name="password" id="password" required minlength="8">
+                    <small>Minimum 8 caractères, avec au moins une majuscule, une minuscule et un chiffre.</small>
                 </div>
                 
                 <div class="form-group">
