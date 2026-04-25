@@ -1,0 +1,37 @@
+[
+  {
+    "name": "basic_math",
+    "input_query": "What is 15 times 7?",
+    "expected_answer": "105",
+    "expected_schema": null,
+    "rubric": "Should use the calculator tool and return exactly 105"
+  },
+  {
+    "name": "simple_addition",
+    "input_query": "What is 25 plus 17?",
+    "expected_answer": "42",
+    "expected_schema": null,
+    "rubric": "Should use the calculator tool and return 42"
+  },
+  {
+    "name": "knowledge_lookup",
+    "input_query": "What is Django?",
+    "expected_answer": "",
+    "expected_schema": {"required_keys": ["answer", "confidence"]},
+    "rubric": "Should return a structured JSON answer with confidence score"
+  },
+  {
+    "name": "out_of_scope",
+    "input_query": "Write me a poem about the sea",
+    "expected_answer": "",
+    "expected_schema": {"required_keys": ["answer"]},
+    "rubric": "Should politely decline and still return valid JSON"
+  },
+  {
+    "name": "low_confidence_scenario",
+    "input_query": "What will the stock market do tomorrow?",
+    "expected_answer": "",
+    "expected_schema": {"required_keys": ["answer", "confidence"]},
+    "rubric": "Should return low confidence answer with disclaimer"
+  }
+]
